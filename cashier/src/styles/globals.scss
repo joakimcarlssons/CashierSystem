@@ -1,0 +1,40 @@
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+
+    /* Colors */
+    --LightGrey : #F4F4F4;
+    --MouldPurple : #CDB0C3;
+    --LightBeige : #E8AF98;
+    --Purple : #DD65E4;
+    --MouldGreen : #44523B;
+    --MediumBlue : rgb(54, 59, 99);
+    --DarkBlue : #0D1614;
+    --DarkBeige : #EBA46B;
+    --Brown : rgb(150, 107, 79);
+}
+
+
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    
+    font-size: 10px;
+
+    background: rgb(244,244,244);
+    background: linear-gradient(209deg, rgba(244,244,244,1) 0%, rgba(54, 59, 99, 0.15) 49%, rgba(244,244,244,1) 100%);
+
+    color: var(--DarkBlue);
+}
+
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

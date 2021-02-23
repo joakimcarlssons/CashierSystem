@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins:wght@300&display=swap');
+
 *, *::before, *::after {
     margin: 0;
     padding: 0;
@@ -11,10 +13,15 @@
     --LightBeige : #E8AF98;
     --Purple : #DD65E4;
     --MouldGreen : #44523B;
-    --MediumBlue : rgb(54, 59, 99);
+    --MediumBlue : #363b63;
     --DarkBlue : #0D1614;
     --DarkBeige : #EBA46B;
     --Brown : rgb(150, 107, 79);
+    --GreyBlue : #747691;
+
+    /* Fonts */
+    --OpenSans : 'Open Sans', sans-serif;
+    --Poppins : 'Poppins', sans-serif;
 }
 
 

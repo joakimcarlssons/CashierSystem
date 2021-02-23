@@ -1,10 +1,17 @@
 /* Headings */
 h1, h2, h3, h4, h5 {
-    color: var(--DarkBlue);
+    color: var(--MediumBlue);
+    font-family: var(--OpenSans);
 }
 
 /* Links */
 a {
     text-decoration: none;
-    color: var(--DarkBlue);
+    color: var(--MediumBlue);
+    font-family: var(--Poppins);
+}
+
+
+p {
+    font-family: var(--Poppins);
 }

@@ -14,7 +14,7 @@
       </button>
     </div>
 
-    <h4>Lär mig mer</h4>
+    <h4>Läs mer | Hitta kassa</h4>
 
   </div>
 </template>
@@ -28,7 +28,6 @@ export default {
 <style lang="scss" scoped>
 
 .container {
-
     justify-content: space-evenly;
     margin: 0 2rem;
     text-align: center;
@@ -37,15 +36,18 @@ export default {
         padding: 0;
         margin: 2rem;
         display: flex;
-    
-        p:first-of-type {
+
+        p {
             align-self: center;
-            padding: 1.5rem 3rem 1.5rem 5rem;
-        }
-    
-        p:last-of-type {
-            align-self: center;
-            padding-right: 2rem;
+ 
+            &:first-of-type {
+                padding: 1.5rem 3rem 1.5rem 5rem;
+                letter-spacing: .07rem;
+            }
+
+            &:last-of-type {
+                padding-right: 2rem;
+            }
         }
     }
 

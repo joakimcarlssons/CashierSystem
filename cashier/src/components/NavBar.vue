@@ -8,6 +8,11 @@
         <hr>
     </div>
 
+    <div class="icons">
+        <div class="activeOrder"></div>
+        <div class="waitingOrders"></div>
+    </div>
+
 </nav>
 </template>
 
@@ -71,6 +76,24 @@ nav {
                     width: 2rem;
                 }
             }
+        }
+    }
+
+    /* Icons */
+    .icons {
+        display: flex;
+        gap: .5rem;
+
+        .activeOrder {
+            height: 2rem;
+            width: 2rem;
+            background-color: var(--MouldGreen);
+        }
+
+        .waitingOrders {
+            height: 2rem;
+            width: 2rem;
+            background-color: var(--Brown);
         }
     }
 }

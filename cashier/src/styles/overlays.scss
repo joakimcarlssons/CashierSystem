@@ -8,11 +8,22 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(244, 244, 244, .8);
+    background-color: transparent;
     z-index: 2;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+
+/* Container for items with the possibility to click outside */
+.overlayContainer {
+    height: 20rem;
+    margin: 0 2rem;
+    text-align: center;
+    justify-content: center;
+    background-color: var(--LightGrey);
+    box-shadow: 0 0 1.5rem 0rem var(--GreyBlue);
 }

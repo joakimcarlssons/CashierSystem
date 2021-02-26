@@ -11,8 +11,9 @@
     v-if="activeModal.active">
       <div 
       class="content"
+      :style="activeModal.allowOutsideClick ? '' : 'height: 100%; width: 100%'"
       @mouseenter="outsideContent = false"
-      @mouseleave="outsideContent = true"
+      @mouseleave="activeModal.allowOutsideClick ? outsideContent = true : outsideContent = false"
       >
       
       <!-- The different modal components -->
@@ -20,6 +21,9 @@
       v-if="activeModal.name == 'createCashierItem'"
       />
 
+      <ConfirmDeleteCashierItem
+      v-if="activeModal.name == 'deleteCashierItem'"
+      />
       </div>
     </div>
 
@@ -32,11 +36,12 @@
 
 import Nav from '@/components/NavBar'
 import CreateCashierItem from '@/components/CreateCashierItem'
+import ConfirmDeleteCashierItem from '@/components/ConfirmDeleteCashierItem'
 
 //#endregion
 
 export default {
-  components : { Nav, CreateCashierItem },
+  components : { Nav, CreateCashierItem, ConfirmDeleteCashierItem },
 
   computed: {
 

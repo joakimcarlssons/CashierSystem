@@ -13,7 +13,7 @@ export default new Vuex.Store({
   state: {
 
     // The modal/overlay currently being shown in the application
-    modal : { name : "", active : false }
+    modal : { name : "", allowOutsideClick : true, active : false }
 
   },
   mutations: {
@@ -22,7 +22,7 @@ export default new Vuex.Store({
     [m.CHANGE_MODAL]: (state, modal) => state.modal = modal,
 
     // Reset the modal/overlay
-    [m.RESET_MODAL]: (state) => state.modal = { name : "", active : false }
+    [m.RESET_MODAL]: (state) => state.modal = { name : "", allowOutsideClick : true, active : false }
 
   },
   actions: {

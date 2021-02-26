@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" @click="canExitEditMode ? shake = false : ''">
 
       <div class="info">
         <input type="text" class="cashierName" placeholder="Ditt kassanamn" v-model="cashier.name">
@@ -10,18 +10,25 @@
 
       </div>
 
-      <ul class="cashierItems">
+      <ul class="cashierItems" @mouseover="canExitEditMode = false" @mouseleave="canExitEditMode = true">
 
           <li 
           v-for="item in cashier.cashierItems"
           :key="item.id"
+          @mousedown="startTimer"
+          @touchstart="startTimer"
+          @mouseup="shakeReady = false"
+          @touchend="shakeReady = false"
+          :class="{shake : shake}"
           >
-            <CashierItem :cashierItem="item" />
+            <CashierItem :cashierItem="item" :editable="shake"
+            />
           </li>
 
           <li
           class="createItem"
-          @click="$store.commit('changeModal', { name : 'createCashierItem', active : true })"
+          @click="$store.commit('changeModal', 
+            { name : 'createCashierItem', allowOutsideClick : false, active : true })"
           >
               <EmptyCashierItem
               />
@@ -37,11 +44,27 @@ import EmptyCashierItem from '@/components/EmptyCashierItem'
 
 export default {
 
+    data() { return {
+        shakeReady : false,
+        shake : false,
+        canExitEditMode : false
+    }},
+
     components : { CashierItem, EmptyCashierItem },
 
     computed: {
         cashier() { return this.$store.state.cashier.currentCashier }
     },
+
+    methods: {
+        startTimer() {
+            this.shakeReady = true
+
+            setTimeout(() => {
+                if (this.shakeReady) this.shake = true
+            }, 1000)
+        }
+    }
 }
 </script>
 

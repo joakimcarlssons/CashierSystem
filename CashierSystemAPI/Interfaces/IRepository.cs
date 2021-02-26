@@ -26,14 +26,14 @@ namespace CashierSystemAPI
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns></returns>
-        public abstract Task<DBUserResult> CreateUser(User user);
+        public abstract Task<DBUserResult> CreateUser(string phoneNumber, int PIN);
 
         /// <summary>
         /// Logins the user.
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns></returns>
-        public abstract Task<DBUserResult> LoginUser(User user);
+        public abstract Task<DBUserResult> LoginUser(string phoneNumber, int PIN);
 
         #endregion
 
@@ -71,7 +71,7 @@ namespace CashierSystemAPI
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns></returns>
-        public abstract Task<DbStatusResult> UpdateItem(Item item);
+        public abstract Task<Item> UpdateItem(Item item);
 
         #endregion
     }

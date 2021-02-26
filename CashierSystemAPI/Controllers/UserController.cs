@@ -39,45 +39,52 @@ namespace CashierSystemAPI
         /// <returns></returns>
         [HttpPost]
         [Route("/user/create")]
-        public async Task<IActionResult> Create([FromBody] User user)
+        public async Task<IActionResult> Create([FromBody] LoginBody login)
         {
             // Should only fail if an internal server error occurred
             try
             {
                 // This list will contain errors
-                List<string> errors = new List<string>();
+                bool errors = false;
 
                 // Check that the PIN is 4 digits long...
-                if (Math.Floor(Math.Log10(user.PIN)) + 1 != 4)
+                if (Math.Floor(Math.Log10(login.PIN)) + 1 != 4)
                     // Add error message
-                    errors.Add("PIN must be 4 digits long");
-                if(user.PhoneNumber.Length != 10 || !ulong.TryParse(user.PhoneNumber, out _))
+                    errors = true;
+                if (login.PhoneNumber.Length != 10 || !ulong.TryParse(login.PhoneNumber, out _))
                     // Add error message
-                    errors.Add("Invalid phone number");
+                    errors = true;
 
                 // If no errors exist...
-                if (errors.Count == 0)
+                if (!errors)
                 {
                     // Create the user
-                    var query = await Container.Repository.CreateUser(user);
+                    var query = await Container.Repository.CreateUser(login.PhoneNumber, login.PIN);
 
                     // If user could be created
                     if (query.Result == QueryResults.Successful)
                     {
+                        // Create the user object
+                        var u = new User()
+                        {
+                            UserID = query.UserID,
+                            PhoneNumber = login.PhoneNumber
+                        };
+
                         // Return the JWT token to the client
-                        return Ok(new APIResponse(TokenHelpers.CreateAccessToken(user).JWT));
+                        return Ok(new AuthResponse(TokenHelpers.CreateAccessToken(u).JWT, u));
                     }
                     else
                         // Return the JWT token to the client
-                        return BadRequest(new APIResponse(new string[] { "Could not create user", 
-                                                                         "Query result: " + query.Result.ToString() }));
+                        return BadRequest(new ErrorResponse(400, "Could not crete user"));
 
                 }
                 // If errors exist...
-                else return BadRequest(new APIResponse(errors)); // Return all errors as the response
+                return BadRequest(new ErrorResponse(400, "Could not crete user"));
             }
             // Internal error
-            catch { return StatusCode(500, new APIResponse("Error")); }
+            catch { return StatusCode(500, new ErrorResponse(500, "Internal server error")); }
+
         }
 
         /// <summary>
@@ -87,31 +94,36 @@ namespace CashierSystemAPI
         /// <returns></returns>
         [HttpPost]
         [Route("/user/login")]
-        public async Task<IActionResult> Login([FromBody] User user)
+        public async Task<IActionResult> Login([FromBody] LoginBody login)
         {
             // Should only fail if an internal server error occurred
             try
             {
                 // Try to login the user
-                var query = await Container.Repository.LoginUser(user);
+                var query = await Container.Repository.LoginUser(login.PhoneNumber, login.PIN);
 
                 // If the login was successful
                 if(query.Result == QueryResults.Successful)
                 {
-                    // Set the userID that was returned from the database
-                    user.UserID = (int)query.UserID;
-                    // Return the JWT token to the client
-                    return Ok(new APIResponse(TokenHelpers.CreateAccessToken(user).JWT));
+                    // Create the user object
+                    var u = new User()
+                    {
+                        UserID = query.UserID,
+                        PhoneNumber = login.PhoneNumber
+                    };
+
+                    // Return a bad request
+                    return Ok(new AuthResponse(TokenHelpers.CreateAccessToken(u).JWT, u));
                 }
                 // Else...
                 else
                 {
                     // Return unauthorized reponse with error message
-                    return Unauthorized(new APIResponse(new string[] { "Login failed" }));
+                    return Unauthorized(new ErrorResponse(401, "Login failed"));
                 }
             }
             // Return server error code
-            catch { return StatusCode(500, new APIResponse("Error")); }
+            catch { return StatusCode(500, new ErrorResponse(500, "Internal server error")); }
         }
     }
 }

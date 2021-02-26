@@ -21,10 +21,5 @@ namespace CashierSystemAPI
         /// </summary>
         [MinLength(10)] [MaxLength(10)]
         public string PhoneNumber { get; set; }
-
-        /// <summary>
-        /// Gets or sets the user's pin.
-        /// </summary>
-        public int PIN { get; set; }
     }
 }

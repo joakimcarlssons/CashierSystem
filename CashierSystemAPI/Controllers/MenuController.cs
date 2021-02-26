@@ -29,10 +29,10 @@ namespace CashierSystemAPI
                 var res = await Container.Repository.GetMenu(id);
 
                 // Return the items
-                return Ok(new APIResponse(res));
+                return Ok(new MenuResponse($"User {id}'s items", res));
             }
             // Return response that tells there was a server error
-            catch { return StatusCode(500, new APIResponse("Error")); }
+            catch { return StatusCode(500, new ErrorResponse(500, "Internal server error")); }
         }
     }
 }

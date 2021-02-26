@@ -4,11 +4,9 @@
 namespace CashierSystemAPI
 {
     // Required nemespaces
-    using System;
-    using System.Linq;
+    using JWTLib;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
-    using JWTLib;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -49,7 +47,7 @@ namespace CashierSystemAPI
                 // Format the authorization header
                 var token = TokenHelpers.FormatAuthorizationHeader(authorization);
                 // If validation failed
-                if (token == null) return Unauthorized(new APIResponse("Unauthorized"));
+                if (token == null) return Unauthorized(new OKResponse("Unauthorized"));
                 // Else...
                 else
                 {
@@ -66,23 +64,25 @@ namespace CashierSystemAPI
                         if(res.Result == QueryResults.Successful)
                         {
                             // The item was added so return OK response
-                            return Ok(new APIResponse("Item(s) added"));
+                            return Ok(new ItemResponse("Item(s) added", item));
                         }
                         // Else...
                         else
                         {
                             // Return a bad request
-                            return BadRequest(new APIResponse(new string[] { "Bad request", "Query result: " + res.Result.ToString() }));
+                            return BadRequest(
+                                new ErrorResponse(400, "Item could not be added"));
                         }
 
                     }
                     // Else...
-                    else { return Unauthorized(new APIResponse(new string[] { "Unauthorized" })); } // Return 'JWT is invalid' response
+                    else return Unauthorized( // Return unaturhorized result
+                        new ErrorResponse(401, "Unauthorized"));
 
                 }
             }
             // Return response that tells there was a server error
-            catch { return StatusCode(500, new APIResponse("Error")); }
+            catch { return StatusCode(500, new OKResponse("Error")); }
 
         }
 
@@ -102,7 +102,7 @@ namespace CashierSystemAPI
                 // Format the authorization header
                 var token = TokenHelpers.FormatAuthorizationHeader(authorization);
                 // If validation failed
-                if (token == null) return Unauthorized(new APIResponse("Unauthorized"));
+                if (token == null) return Unauthorized(new OKResponse("Unauthorized"));
                 // Else...
                 else
                 {
@@ -116,22 +116,24 @@ namespace CashierSystemAPI
                         if(res.Result == QueryResults.Successful)
                         {
                             // Send back Ok response
-                            return Ok(new APIResponse("Item(s) removed"));
+                            return Ok(new OKResponse("Item(s) removed"));
                         }
                         // Else...
                         else
                         {
                             // Return a bad request
-                            return BadRequest(new APIResponse(new string[] { "Bad request", "Query result: " + res.Result.ToString() }));
+                            return BadRequest(
+                                new ErrorResponse(400, "Item could not be removed"));
                         }
                     }
                     // Else...
-                    else { return Unauthorized(new APIResponse(new string[] { "Unauthorized" })); } // Return 'JWT is invalid' response
-
+                    else
+                        return Unauthorized( // Return unaturhorized result
+                            new ErrorResponse(401, "Unauthorized"));
                 }
             }
             // Return response that tells there was a server error
-            catch { return StatusCode(500, new APIResponse("Error")); }
+            catch { return StatusCode(500, new OKResponse("Error")); }
 
         }
 
@@ -153,7 +155,7 @@ namespace CashierSystemAPI
                 // Format the authorization header
                 var token = TokenHelpers.FormatAuthorizationHeader(authorization);
                 // If validation failed
-                if (token == null) return Unauthorized(new APIResponse("Unauthorized"));
+                if (token == null) return Unauthorized(new OKResponse("Unauthorized"));
                 // Else...
                 else
                 {
@@ -166,24 +168,27 @@ namespace CashierSystemAPI
                         var res = await Container.Repository.UpdateItem(item);
 
                         // If the item was updated successfuly
-                        if(res.Result == QueryResults.Successful)
+                        if(res != null)
                         {
-                            return Ok(new APIResponse("Item(s) updated"));
+                            return Ok(new ItemResponse("Item(s) updated", res));
                         }
                         else
                         {
                             // Return a bad request
-                            return BadRequest(new APIResponse(new string[] { "Bad request", "Query result: " + res.Result.ToString() }));
+                            return BadRequest(
+                                new ErrorResponse(400, "Item(s) could not be updated"));
                         }
 
                     }
                     // Else...
-                    else { return Unauthorized(new APIResponse(new string[] { "Unauthorized" })); } // Return 'JWT is invalid' response
+                    else
+                        return Unauthorized( // Return unaturhorized result
+                            new ErrorResponse(401, "Unauthorized"));
 
                 }
             }
             // Return response that tells there was a server error
-            catch { return StatusCode(500, new APIResponse("Error")); }
+            catch { return StatusCode(500, new OKResponse("Error")); }
         }
     }
 }

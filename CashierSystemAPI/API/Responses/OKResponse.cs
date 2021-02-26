@@ -7,7 +7,7 @@ namespace CashierSystemAPI
     /// A normal API response
     /// </summary>
     /// <seealso cref="CashierSystemAPI.IResponse" />
-    public class APIResponse : IResponse
+    public class OKResponse
     {
         /// <summary>
         /// Gets or sets the response.
@@ -15,10 +15,10 @@ namespace CashierSystemAPI
         public object Response { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="APIResponse"/> class.
+        /// Initializes a new instance of the <see cref="OKResponse"/> class.
         /// </summary>
         /// <param name="response">The response.</param>
-        public APIResponse(object response)
+        public OKResponse(object response)
         {
             // Set the response
             this.Response = response;

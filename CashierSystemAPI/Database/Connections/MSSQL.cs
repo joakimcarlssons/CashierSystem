@@ -23,7 +23,7 @@ namespace CashierSystemAPI
         public IDbConnection Connect()
         {
             // Create the connection
-            var Connection = new SqlConnection("");
+            var Connection = new SqlConnection("Data Source=DESKTOP-LCJR5AI;Initial Catalog=CashierSystem;Integrated Security=True");
 
             // Return the connection
             return Connection;
@@ -37,7 +37,7 @@ namespace CashierSystemAPI
         /// <param name="user">The user.</param>
         /// <param name="login">if set to <c>true</c> [login].</param>
         /// <returns></returns>
-        private async Task<DBUserResult> LoginCreate(User user, bool login = true)
+        private async Task<DBUserResult> LoginCreate(string phoneNumber, int PIN, bool login = true)
         {
             // Try to create the new user...
             try
@@ -48,7 +48,7 @@ namespace CashierSystemAPI
                     // Excecute the stored procedure
                     var res = (await connection.QueryAsync<DBUserResult>(
                         (login) ? "LoginUser" : "CreateUser", 
-                        new { PhoneNumber = user.PhoneNumber, PIN = user.PIN }, 
+                        new { PhoneNumber = phoneNumber, PIN = PIN }, 
                         commandType: CommandType.StoredProcedure)).First();
 
                     // Get the result
@@ -56,7 +56,7 @@ namespace CashierSystemAPI
                 }
             }
             // If something failed...
-            catch 
+            catch
             {
                 // Return false result
                 return new DBUserResult() { Result = QueryResults.APIError }; 
@@ -74,10 +74,10 @@ namespace CashierSystemAPI
         /// <param name="user">The user.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public async Task<DBUserResult> CreateUser(User user)
+        public async Task<DBUserResult> CreateUser(string phoneNumber, int PIN)
         {
             // Create user and return result
-            return await LoginCreate(user, false);
+            return await LoginCreate(phoneNumber, PIN, false);
         }
 
         /// summary>
@@ -86,10 +86,10 @@ namespace CashierSystemAPI
         /// <param name="user">The user.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public async Task<DBUserResult> LoginUser(User user)
+        public async Task<DBUserResult> LoginUser(string phoneNumber, int PIN)
         {
             // Login the user and return result
-            return await LoginCreate(user);
+            return await LoginCreate(phoneNumber, PIN);
         }
 
         #endregion
@@ -158,7 +158,8 @@ namespace CashierSystemAPI
                             Stock = item.Stock,
                             Price = item.Price,
                             SellerID = item.SellerID,
-                            Image = item.Image
+                            Image = item.Image,
+                            Description = item.Description
                         }
                         ,
                         commandType: CommandType.StoredProcedure)).First();
@@ -211,7 +212,7 @@ namespace CashierSystemAPI
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns></returns>
-        public async Task<DbStatusResult> UpdateItem(Item item)
+        public async Task<Item> UpdateItem(Item item)
         {
             // Try to update the item to the database
             try
@@ -220,7 +221,7 @@ namespace CashierSystemAPI
                 using (var connection = Connect())
                 {
                     // Get the result from the database
-                    var res = (await connection.QueryAsync<DbStatusResult>(
+                    var res = (await connection.QueryAsync<Item>(
                         "UpdateItem",
                         // Create parameters
                         new
@@ -229,7 +230,8 @@ namespace CashierSystemAPI
                             Name = item.Name,
                             Stock = item.Stock,
                             Price = item.Price,
-                            Image = item.Image
+                            Image = item.Image,
+                            Description = item.Description
                         }
                         ,
                         commandType: CommandType.StoredProcedure)).First();
@@ -242,7 +244,7 @@ namespace CashierSystemAPI
             catch
             {
                 // Return a new status code 'API error'
-                return new DbStatusResult() { Result = QueryResults.APIError };
+                return null;
             }
         }
 

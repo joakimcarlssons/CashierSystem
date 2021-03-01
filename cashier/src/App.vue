@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Nav />
-    <router-view/>
+    <router-view :style="activeModal.active ? 'filter: blur(2px)' : ''" />
 
 
     <!-- Overlays -->

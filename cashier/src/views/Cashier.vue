@@ -1,5 +1,5 @@
 <template>
-  <div class="container" @click="canExitEditMode ? shake = false : ''">
+  <div class="container" @click="canExitEditMode ? editModeActive = false : ''">
 
       <div class="info">
         <input type="text" class="cashierName" placeholder="Ditt kassanamn" v-model="cashier.name">
@@ -15,13 +15,13 @@
           <li 
           v-for="item in cashier.cashierItems"
           :key="item.id"
-          @mousedown="startTimer"
+          @mousedown="startClick"
+          @mouseup="endClick(item)"
           @touchstart="startTimer"
-          @mouseup="shakeReady = false"
-          @touchend="shakeReady = false"
-          :class="{shake : shake}"
+          @touchend="endTimer"
+          :class="{shake : editModeActive}"
           >
-            <CashierItem :cashierItem="item" :editable="shake"
+            <CashierItem :cashierItem="item" :editable="editModeActive"
             />
           </li>
 
@@ -45,25 +45,59 @@ import EmptyCashierItem from '@/components/EmptyCashierItem'
 export default {
 
     data() { return {
-        shakeReady : false,
-        shake : false,
-        canExitEditMode : false
+        editModeActive : false,
+        canOpenEditModal : false,
+        canExitEditMode : false,
+        editTimer : null
     }},
 
     components : { CashierItem, EmptyCashierItem },
 
     computed: {
+        
+        // The current cashier
         cashier() { return this.$store.state.cashier.currentCashier }
     },
 
     methods: {
-        startTimer() {
-            this.shakeReady = true
 
-            setTimeout(() => {
-                if (this.shakeReady) this.shake = true
-            }, 1000)
-        }
+        // Starts a timer to check whether the user is holding the item to edit it or not
+        startClick() {
+
+            // If the edit mode is active, activate possibility to open edit modal
+            if (this.editModeActive) this.canOpenEditModal = true
+            // Else turn the possibility off
+            else this.canOpenEditModal = false
+
+            // Start the click timer
+            this.startTimer()
+        },
+
+        // Stop the edit mode
+        endClick(item) {
+
+            // Stop the timer
+            this.endTimer()
+
+            // If the edit mode is active, open the edit modal
+            if(this.canOpenEditModal) console.log(item)
+
+            // If the edit mode is not active, add the item to the current order
+            else this.$store.commit('addOrderItem', item)
+        },
+
+        // Starts a timer to check whether the user is holding the item to edit it or not
+        startTimer() {
+
+            // If the user is holding the item when the timer is up, activate the edit mode
+            this.editTimer = setTimeout(() => {
+                this.editModeActive = true
+            }, 1500)
+
+        },
+
+        // Stop the timer
+        endTimer() { clearTimeout(this.editTimer) },
     }
 }
 </script>

@@ -9,7 +9,7 @@
     </div>
 
     <div class="icons">
-        <div class="activeOrder"></div>
+        <div class="activeOrder">{{order.currentOrder.length}}</div>
         <div class="waitingOrders"></div>
     </div>
 
@@ -18,6 +18,10 @@
 
 <script>
 export default {
+
+    computed: {
+        order() { return this.$store.state.order }
+    }
 
 }
 </script>
@@ -84,15 +88,21 @@ nav {
         display: flex;
         gap: .5rem;
 
-        .activeOrder {
+        .activeOrder, .waitingOrders {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             height: 2rem;
             width: 2rem;
+
+            color: white;
+        }
+
+        .activeOrder {
             background-color: var(--MouldGreen);
         }
 
         .waitingOrders {
-            height: 2rem;
-            width: 2rem;
             background-color: var(--Brown);
         }
     }

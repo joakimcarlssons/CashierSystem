@@ -6,6 +6,7 @@ import * as m from './mutations'
 
 // Import modules
 import {Cashier} from './modules/cashier'
+import {Order} from './modules/order'
 
 Vue.use(Vuex)
 
@@ -29,7 +30,8 @@ export default new Vuex.Store({
   },
   modules: {
 
-    cashier : Cashier
+    cashier : Cashier,
+    order : Order
 
   }
 })

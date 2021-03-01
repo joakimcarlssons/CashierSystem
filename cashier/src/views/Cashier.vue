@@ -80,7 +80,14 @@ export default {
             this.endTimer()
 
             // If the edit mode is active, open the edit modal
-            if(this.canOpenEditModal) console.log(item)
+            if(this.canOpenEditModal) {
+
+                // Set the selected cashier item
+                this.$store.commit('setSelectedCashierItem', item)
+
+                // Open the edit modal
+                this.$store.commit('changeModal', { name : 'editCashierItem', allowClickOutside : false, active : true })
+            }
 
             // If the edit mode is not active, add the item to the current order
             else this.$store.commit('addOrderItem', item)

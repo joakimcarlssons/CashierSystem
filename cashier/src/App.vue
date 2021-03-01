@@ -24,6 +24,14 @@
       <ConfirmDeleteCashierItem
       v-if="activeModal.name == 'deleteCashierItem'"
       />
+
+      <EditCashierItem
+      v-if="activeModal.name == 'editCashierItem'"
+      />
+
+      <OrderCheckout
+      v-if="activeModal.name == 'orderCheckout'" />
+
       </div>
     </div>
 
@@ -37,11 +45,13 @@
 import Nav from '@/components/NavBar'
 import CreateCashierItem from '@/components/CreateCashierItem'
 import ConfirmDeleteCashierItem from '@/components/ConfirmDeleteCashierItem'
+import EditCashierItem from '@/components/EditCashierItem'
+import OrderCheckout from '@/components/OrderCheckout'
 
 //#endregion
 
 export default {
-  components : { Nav, CreateCashierItem, ConfirmDeleteCashierItem },
+  components : { Nav, CreateCashierItem, ConfirmDeleteCashierItem, EditCashierItem, OrderCheckout },
 
   computed: {
 

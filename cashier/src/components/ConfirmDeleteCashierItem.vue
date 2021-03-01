@@ -1,7 +1,7 @@
 <template>
   <div class="container overlayContainer">
 
-      <h2>Är du säker på att du vill ta bort produkten?</h2>
+      <h2>Är du säker på att du vill ta bort {{selectedItem.name}}?</h2>
 
       <div class="btns">
 
@@ -11,7 +11,7 @@
           <img src="@/assets/times-circle-solid.svg" alt="abort"
           @click="$store.commit('resetModal')"
           >
-
+ 
       </div>
 
   </div>
@@ -19,8 +19,8 @@
 
 <script>
 export default {
-    props: {
-        item : Object
+    computed: {
+        selectedItem() { return this.$store.state.cashier.selectedItem }
     },
 
     methods: {
@@ -29,7 +29,7 @@ export default {
         async removeItem() {
 
             // Remove the item
-            await this.$store.dispatch('removeCashierItem', this.item)
+            await this.$store.dispatch('removeCashierItem', this.selectedItem)
             
             // Close the modal
             this.$store.commit('resetModal')
@@ -40,7 +40,14 @@ export default {
 
 <style lang="scss" scoped>
 
+.overlayContainer {
+    text-align: center;
+    justify-content: center;
+}
+
 .container {
+    padding: 0 3rem;
+
     h2 {
         color: black;
     }

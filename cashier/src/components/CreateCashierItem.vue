@@ -1,6 +1,8 @@
 <template>
-  <div class="container">  
+  <div class="container"> 
       
+      <h3 class="close" @click="$store.commit('resetModal')">X</h3>
+
       <h1>Lägg till produkt</h1>
       
       <div class="form">
@@ -43,6 +45,8 @@ export default {
     // The item to be added
     cashierItem : {
 
+      id : this.$store.state.cashier.currentCashier.cashierItems.length + 1,
+
       // The name of the item
       name : "Jockes special",
 
@@ -56,7 +60,7 @@ export default {
       stock: 1,
 
       // The image of the item
-      img : "@/assets/image-not-found.svg"
+      img : "image-not-found.svg"
 
     }
   }},
@@ -65,7 +69,6 @@ export default {
 
     // Creates a new item
     async createItem() {
-
       // Create the cashier item
       await this.$store.dispatch('addCashierItem', this.cashierItem)
 
@@ -86,6 +89,7 @@ export default {
   
   h1 {
     align-self: center;
+    margin-top: 2rem;
   }
 
   .form {
@@ -127,6 +131,11 @@ export default {
     }
   }
 
+.close {
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
+}
 
 }
 

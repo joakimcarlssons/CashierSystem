@@ -21,6 +21,9 @@ export const Cashier = {
         // Remove a cashier item in the store version
         [m.REMOVE_CASHIER_ITEM]: (state, item) => state.currentCashier.cashierItems.splice(state.currentCashier.cashierItems.indexOf(item), 1),
 
+        // Update a cashier item in the store version
+        [m.UPDATE_CASHIER_ITEM]: (state, item) => Object.assign(state.currentCashier.cashierItems.find(x => x.id == item.id), item),
+
         // Set the cashier item that has been slected for edit or deletion
         [m.SELECT_CASHIER_ITEM]: (state, item) => state.selectedItem = item,
 
@@ -44,6 +47,14 @@ export const Cashier = {
             // TODO: Make Api call
 
             context.commit(m.REMOVE_CASHIER_ITEM, item)
+        },
+
+        // Update a cashier item in the database
+        async [m.UPDATE_CASHIER_ITEM](context, item) {
+
+            // TODO: Make Api call
+
+            context.commit(m.UPDATE_CASHIER_ITEM, item)
         }
     },
 

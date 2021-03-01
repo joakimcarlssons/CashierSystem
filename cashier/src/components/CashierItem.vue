@@ -4,13 +4,10 @@
     <div class="editDelete">
 
       <div class="btns" v-if="editable"> 
-
-        <img src="@/assets/edit-solid.svg" alt="edit">
         <img 
         src="@/assets/trash-solid.svg" 
         alt="trash" 
-         @click="$store.commit('changeModal', 
-            { name : 'deleteCashierItem', allowOutsideClick : true, active : true })">
+         @click="confirmDeletion">
 
       </div>
 
@@ -34,6 +31,15 @@ export default {
     props: {
         cashierItem : Object,
         editable : Boolean
+    },
+
+    methods: {
+      confirmDeletion() {
+        this.$store.commit('setSelectedCashierItem', this.cashierItem)
+
+        this.$store.commit('changeModal', 
+            { name : 'deleteCashierItem', allowOutsideClick : true, active : true })
+      }
     }
 
 }

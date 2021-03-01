@@ -9,7 +9,9 @@
     </div>
 
     <div class="icons">
-        <div class="activeOrder">{{order.currentOrder.length}}</div>
+        <div class="activeOrder"
+        @click="$store.commit('changeModal', { name : 'orderCheckout', allowOutsideClick : true, active: true })"
+        >{{orderAmount}}</div>
         <div class="waitingOrders"></div>
     </div>
 
@@ -20,10 +22,10 @@
 export default {
 
     computed: {
-        order() { return this.$store.state.order }
+        orderAmount() { return this.$store.state.order.totalAmount }
     }
-
 }
+
 </script>
 
 <style lang="scss" scoped>

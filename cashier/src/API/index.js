@@ -58,7 +58,6 @@ export async function CreateItem(item, token) {
             name: item.name,
             stock: item.stock,
             price: item.price,
-            sellerID: item.sellerID,
             image: item.image,
             description: item.description
         }
@@ -90,7 +89,9 @@ export async function UpdateItem(id, item, token) {
 //#region Menu functions
 
 // Gets the requested menu from a seller
-export async function GetMenu(id) {
+// A user id can be provided to fetch that sellers items.
+// A token can be provided to retrieve the logged in sellers items
+export async function GetMenu(id = null, token = null) {
 
     return await axios.get(baseURL + "menu/" + id);
 }

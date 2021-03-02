@@ -39,7 +39,7 @@ namespace CashierSystemAPI
         /// <param name="authorization">The authorization token.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] Item item, [FromHeader] string authorization)
+        public async Task<IActionResult> Create([FromBody] Item item, [FromHeader] string authorization)
         {
             // This should only fail if there was an internal server error
             try

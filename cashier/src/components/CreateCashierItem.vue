@@ -57,7 +57,7 @@ export default {
       price : 1,
 
       // The current stock of the item
-      stock: 1,
+      stock: 5,
 
       // The image of the item
       img : "image-not-found.svg"

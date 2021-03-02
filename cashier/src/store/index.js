@@ -7,6 +7,10 @@ import * as m from './mutations'
 // Import modules
 import {Cashier} from './modules/cashier'
 import {Order} from './modules/order'
+import {User} from './modules/user'
+
+/* API imports */
+import {GenerateQRCode} from '@/API/swish.js' 
 
 Vue.use(Vuex)
 
@@ -27,11 +31,19 @@ export default new Vuex.Store({
 
   },
   actions: {
+
+    async generateSwishPayment(context, payload) {
+      let res = await GenerateQRCode(payload.phoneNumber, payload.amount)
+      console.log(res)
+      console.log(context)
+    }
+
   },
   modules: {
 
     cashier : Cashier,
-    order : Order
+    order : Order,
+    user : User
 
   }
 })

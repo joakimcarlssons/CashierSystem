@@ -6,9 +6,9 @@
       </h1>
     
     <div class="inputContent">
-      <input type="text" placeholder="Telefonnummer" />
+      <input type="number" placeholder="Telefonnummer" v-model="user.phoneNumber" />
 
-      <button class="cta">
+      <button class="cta" @click="registerUser">
               <p>Skapa kassa</p>
               <p class="end">></p>
       </button>
@@ -21,6 +21,25 @@
 
 <script>
 export default {
+
+    data(){ return {
+
+        // The user of the application
+        user : {
+            phoneNumber : null,
+        }
+
+    }},
+
+    methods: {
+
+        // Register a user
+        async registerUser() {
+            await this.$store.dispatch('registerUser', this.user)
+
+            this.$router.push('/cashier')
+        }
+    }
 
 }
 </script>

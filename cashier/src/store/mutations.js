@@ -26,9 +26,13 @@ module.exports = {
     //#region Modal
 
     CHANGE_MODAL : 'changeModal',
-    RESET_MODAL : 'resetModal'
+    RESET_MODAL : 'resetModal',
 
     //#endregion
 
-    //#region Order
+    //#region User
+
+    REGISTER_USER : 'registerUser',
+
+    //#endregion
 }

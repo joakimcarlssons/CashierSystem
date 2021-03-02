@@ -21,7 +21,7 @@
       <hr>
 
       <div class="checkout">
-        <button>Bekräfta</button>
+        <button @click="$store.dispatch('generateSwishPayment', { phoneNumber : $store.state.user.currentUser.phoneNumber, amount : totalPrice })">Bekräfta</button>
       </div>
 
   </div>

@@ -39,7 +39,7 @@ namespace CashierSystemAPI
         /// <returns></returns>
         [HttpPost]
         [Route("/user/create")]
-        public async Task<IActionResult> Create([FromBody] LoginBody login)
+        public async Task<IActionResult> Create([FromBody] PostLogin login)
         {
             // Should only fail if an internal server error occurred
             try
@@ -94,7 +94,7 @@ namespace CashierSystemAPI
         /// <returns></returns>
         [HttpPost]
         [Route("/user/login")]
-        public async Task<IActionResult> Login([FromBody] LoginBody login)
+        public async Task<IActionResult> Login([FromBody] PostLogin login)
         {
             // Should only fail if an internal server error occurred
             try

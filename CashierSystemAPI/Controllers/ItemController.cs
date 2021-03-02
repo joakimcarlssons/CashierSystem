@@ -47,7 +47,7 @@ namespace CashierSystemAPI
                 // Format the authorization header
                 var token = TokenHelpers.FormatAuthorizationHeader(authorization);
                 // If validation failed
-                if (token == null) return Unauthorized(new OKResponse("Unauthorized"));
+                if (token == null) return Unauthorized(new DynamicResponse("Unauthorized"));
                 // Else...
                 else
                 {
@@ -71,7 +71,7 @@ namespace CashierSystemAPI
                         {
                             // Return a bad request
                             return BadRequest(
-                                new ErrorResponse(400, "Item could not be added"));
+                                new ErrorResponse(400, "Item(s) could not be added (" + res.Result.ToString() + ")"));
                         }
 
                     }
@@ -82,7 +82,7 @@ namespace CashierSystemAPI
                 }
             }
             // Return response that tells there was a server error
-            catch { return StatusCode(500, new OKResponse("Error")); }
+            catch { return StatusCode(500, new ErrorResponse(500, "Error")); }
 
         }
 
@@ -102,7 +102,7 @@ namespace CashierSystemAPI
                 // Format the authorization header
                 var token = TokenHelpers.FormatAuthorizationHeader(authorization);
                 // If validation failed
-                if (token == null) return Unauthorized(new OKResponse("Unauthorized"));
+                if (token == null) return Unauthorized(new DynamicResponse("Unauthorized"));
                 // Else...
                 else
                 {
@@ -116,14 +116,14 @@ namespace CashierSystemAPI
                         if(res.Result == QueryResults.Successful)
                         {
                             // Send back Ok response
-                            return Ok(new OKResponse("Item(s) removed"));
+                            return Ok(new DynamicResponse("Item(s) removed"));
                         }
                         // Else...
                         else
                         {
                             // Return a bad request
                             return BadRequest(
-                                new ErrorResponse(400, "Item could not be removed"));
+                                new ErrorResponse(400, "Item could not be removed (" + res.Result.ToString() + ")"));
                         }
                     }
                     // Else...
@@ -133,7 +133,7 @@ namespace CashierSystemAPI
                 }
             }
             // Return response that tells there was a server error
-            catch { return StatusCode(500, new OKResponse("Error")); }
+            catch { return StatusCode(500, new ErrorResponse(500, "Error")); }
 
         }
 
@@ -155,7 +155,7 @@ namespace CashierSystemAPI
                 // Format the authorization header
                 var token = TokenHelpers.FormatAuthorizationHeader(authorization);
                 // If validation failed
-                if (token == null) return Unauthorized(new OKResponse("Unauthorized"));
+                if (token == null) return Unauthorized(new DynamicResponse("Unauthorized"));
                 // Else...
                 else
                 {
@@ -168,15 +168,15 @@ namespace CashierSystemAPI
                         var res = await Container.Repository.UpdateItem(item);
 
                         // If the item was updated successfuly
-                        if(res != null)
+                        if(res.Result == QueryResults.Successful)
                         {
-                            return Ok(new ItemResponse("Item(s) updated", res));
+                            return Ok(new ItemResponse("Item(s) updated", res.Item));
                         }
                         else
                         {
                             // Return a bad request
                             return BadRequest(
-                                new ErrorResponse(400, "Item(s) could not be updated"));
+                                new ErrorResponse(400, "Item(s) could not be updated (" + res.Result.ToString() +")"));
                         }
 
                     }
@@ -188,7 +188,7 @@ namespace CashierSystemAPI
                 }
             }
             // Return response that tells there was a server error
-            catch { return StatusCode(500, new OKResponse("Error")); }
+            catch { return StatusCode(500, new ErrorResponse(500, "Error")); }
         }
     }
 }

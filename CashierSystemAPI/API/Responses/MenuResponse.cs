@@ -1,9 +1,11 @@
-﻿using System.Collections;
-/// <summary>
+﻿/// <summary>
 /// Root namespace
 /// </summary>
 namespace CashierSystemAPI
 {
+    // Required namespaces
+    using System.Collections;
+
     /// <summary>
     /// Reponse for when a manu is queried
     /// </summary>

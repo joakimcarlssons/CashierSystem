@@ -25,7 +25,7 @@ namespace CashierSystemAPI
         /// <summary>
         /// The data mismatch
         /// </summary>
-        DataMismatch = 3,
+        Invalid = 3,
 
         #endregion
 

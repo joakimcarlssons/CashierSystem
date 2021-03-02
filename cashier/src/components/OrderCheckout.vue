@@ -1,5 +1,5 @@
 <template>
-  <div class="container overlayContainer">
+  <div class="container overlayContainer" v-if="!showQR">
       <ul>
         <li
         v-for="item in currentOrder"
@@ -13,7 +13,7 @@
       </ul>
 
       <hr>
-
+      
       <div class="totals">
         <h2>Totalt: {{totalPrice}} kr</h2>
       </div>
@@ -21,10 +21,11 @@
       <hr>
 
       <div class="checkout">
-        <button @click="$store.dispatch('generateSwishPayment', { phoneNumber : $store.state.user.currentUser.phoneNumber, amount : totalPrice })">Bekräfta</button>
+        <button @click="buy">Bekräfta</button>
       </div>
 
   </div>
+
 </template>
 
 <script>
@@ -48,6 +49,10 @@ export default {
         this.totalPrice += (x.price * x.amount)
       })
     },
+
+    async buy(){
+      await this.$store.dispatch('generateSwishPayment', null)
+    }
   },
 
   mounted() {

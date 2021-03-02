@@ -1,17 +1,24 @@
 import axios from 'axios'
 
-export async function GenerateQRCode(phoneNumber, amount) {
+export async function GenerateQRCode() {
 
-    return await axios.post('https://mpc.getswish.net/qrg-swish/api/v1/prefilled', {
-        "format" : "svg",
-        "payee" : {
-            "value" : phoneNumber,
-            "editable" : false
+    return await axios({
+        method: 'post',
+        url: 'https://cors-anywhere.herokuapp.com/https://mpc.getswish.net/qrg-swish/api/v1/prefilled',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
         },
-        "amount" : {
-            "value" : amount,
-            "editable" : false
+        data: {
+            "format" : "svg",
+            "payee" : {
+                "value" : '0760274800',
+                "editable" : false
+            },
+            "amount" : {
+                "value" : '100',
+                "editable" : false
+            }
         }
-    })
 
+    });
 }

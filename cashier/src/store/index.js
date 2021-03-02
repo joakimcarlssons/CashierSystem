@@ -32,10 +32,10 @@ export default new Vuex.Store({
   },
   actions: {
 
-    async generateSwishPayment(context, payload) {
-      let res = await GenerateQRCode(payload.phoneNumber, payload.amount)
-      console.log(res)
+    async generateSwishPayment(context) {
+      let res = await GenerateQRCode()
       console.log(context)
+      return res;
     }
 
   },

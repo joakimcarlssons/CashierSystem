@@ -32,6 +32,7 @@ export default {
 
     computed: {
       imgUrl() { return require('@/assets/' + this.item.img) },
+      currentItem() { return this.$store.state.order.currentOrder.find(x => x.id == this.item.id) }
     },
 
     mounted() { this.itemAmount = this.item.amount },
@@ -45,7 +46,7 @@ export default {
         this.$store.commit('updateOrderAmounts', { action : 'increase', _item : this.item })
 
         //..and locally
-        this.itemAmount += 1
+        this.itemAmount = this.currentItem.amount
 
         // Change the total price
         this.$emit('priceChanged', this.itemAmount)
@@ -58,7 +59,7 @@ export default {
         this.$store.commit('updateOrderAmounts', { action : 'decrease', _item : this.item })
       
         //..and locally
-        this.itemAmount -= 1
+        this.itemAmount = this.currentItem.amount
 
         // Change the total price
         this.$emit('priceChanged', this.itemAmount)

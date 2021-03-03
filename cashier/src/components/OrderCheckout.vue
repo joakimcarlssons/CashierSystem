@@ -1,6 +1,6 @@
 <template>
-  <div class="container overlayContainer" v-if="!showQR">
-      <ul>
+  <div class="container overlayContainer">
+      <ul v-if="!showPaymentDetails">
         <li
         v-for="item in currentOrder"
         :key="item.id"
@@ -12,6 +12,8 @@
         </li>
       </ul>
 
+      <div v-else v-html="qrCode" style="height: 100%; width: 100%;"></div>
+
       <hr>
       
       <div class="totals">
@@ -21,7 +23,7 @@
       <hr>
 
       <div class="checkout">
-        <button @click="buy">Bekräfta</button>
+        <button @click="loadPaymentDetails">Bekräfta</button>
       </div>
 
   </div>
@@ -35,11 +37,13 @@ export default {
   components: { OrderCheckoutItem },
 
   data(){ return {
-    totalPrice : 0
+    totalPrice : 0,
+    showPaymentDetails : false
   }},
 
   computed: {
     currentOrder() { return this.$store.state.order.currentOrder },
+    qrCode() { return this.$store.state.qrCode }
   },
 
   methods: {
@@ -50,8 +54,10 @@ export default {
       })
     },
 
-    async buy(){
+    async loadPaymentDetails(){
       await this.$store.dispatch('generateSwishPayment', null)
+      this.showPaymentDetails = true
+      console.log(this.qrCode)
     }
   },
 

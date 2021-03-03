@@ -18,7 +18,8 @@ export default new Vuex.Store({
   state: {
 
     // The modal/overlay currently being shown in the application
-    modal : { name : "", allowOutsideClick : true, active : false }
+    modal : { name : "", allowOutsideClick : true, active : false },
+    qrCode : ""
 
   },
   mutations: {
@@ -27,15 +28,17 @@ export default new Vuex.Store({
     [m.CHANGE_MODAL]: (state, modal) => state.modal = modal,
 
     // Reset the modal/overlay
-    [m.RESET_MODAL]: (state) => state.modal = { name : "", allowOutsideClick : true, active : false }
+    [m.RESET_MODAL]: (state) => state.modal = { name : "", allowOutsideClick : true, active : false },
+
+    // Update the QR Code
+    generateSwishPayment: (state, code) => state.qrCode = code
 
   },
   actions: {
 
     async generateSwishPayment(context) {
       let res = await GenerateQRCode()
-      console.log(context)
-      return res;
+      context.commit('generateSwishPayment', res.data)
     }
 
   },

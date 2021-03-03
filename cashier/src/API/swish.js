@@ -11,7 +11,7 @@ export async function GenerateQRCode() {
         data: {
             "format" : "svg",
             "payee" : {
-                "value" : '0760274800',
+                "value" : '0707530860',
                 "editable" : false
             },
             "amount" : {
@@ -22,3 +22,7 @@ export async function GenerateQRCode() {
 
     });
 }
+
+export function GenerateMockQRCode() { 
+    return require('../assets/response.svg')
+}   

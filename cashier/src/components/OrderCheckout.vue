@@ -1,6 +1,6 @@
 <template>
-  <div class="container overlayContainer">
-      <ul v-if="!showPaymentDetails">
+  <div class="container overlayContainer" v-if="!showPaymentDetails">
+      <ul>
         <li
         v-for="item in currentOrder"
         :key="item.id"
@@ -11,8 +11,6 @@
         />
         </li>
       </ul>
-
-      <div v-else v-html="qrCode" style="height: 100%; width: 100%;"></div>
 
       <hr>
       
@@ -25,16 +23,18 @@
       <div class="checkout">
         <button @click="loadPaymentDetails">Bekräfta</button>
       </div>
-
   </div>
+
+  <OrderPayment v-else @goBack="showPaymentDetails = false" />
 
 </template>
 
 <script>
 import OrderCheckoutItem from '@/components/OrderCheckoutItem'
+import OrderPayment from '@/components/OrderPayment'
 
 export default {
-  components: { OrderCheckoutItem },
+  components: { OrderCheckoutItem, OrderPayment },
 
   data(){ return {
     totalPrice : 0,
@@ -76,18 +76,18 @@ export default {
   justify-content: space-around;
   padding: 1rem;
 
-  ul {
-    width: 100%;
-    height: 70%;
-    overflow-y: auto;
-  }
+    ul {
+      width: 100%;
+      height: 70%;
+      overflow-y: auto;
+    }
 
-  hr {
-    width: 95%;
-    border: none;
-    border-bottom: 1px dotted var(--GreyBlue);
+    hr {
+      width: 95%;
+      border: none;
+      border-bottom: 1px dotted var(--GreyBlue);
+    }
   }
-}
 
 .overlayContainer {
   min-height: 50rem;

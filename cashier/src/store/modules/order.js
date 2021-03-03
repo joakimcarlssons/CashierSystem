@@ -15,9 +15,13 @@ export const Order = {
             // If the item already has been added...
             if(state.currentOrder.find(x => x.id == item.id)) {
 
-                // Increase the amount
-                state.currentOrder.find(x => x.id == item.id).amount += 1
-                state.totalAmount += 1
+                // Check that the item is not out of stock
+                if(item.amount < item.stock) {
+                    
+                    // Increase the amount
+                    state.currentOrder.find(x => x.id == item.id).amount += 1
+                    state.totalAmount += 1
+                }
             }
             
             // Add the item to the order if it hasn't been added before
@@ -48,6 +52,12 @@ export const Order = {
                 state.totalAmount -= 1
                 item.amount -= 1
             }
+        },
+
+        // Reset the order
+        [m.RESET_ORDER]: (state) => {
+            state.currentOrder = []
+            state.totalAmount = 0
         }
 
     },

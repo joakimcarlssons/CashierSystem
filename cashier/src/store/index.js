@@ -10,7 +10,7 @@ import {Order} from './modules/order'
 import {User} from './modules/user'
 
 /* API imports */
-import {GenerateQRCode} from '@/API/swish.js' 
+import {GenerateMockQRCode} from '@/API/swish.js' 
 
 Vue.use(Vuex)
 
@@ -37,7 +37,7 @@ export default new Vuex.Store({
   actions: {
 
     async generateSwishPayment(context) {
-      let res = await GenerateQRCode()
+      let res = GenerateMockQRCode()
       context.commit('generateSwishPayment', res.data)
     }
 

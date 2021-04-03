@@ -11,8 +11,12 @@
     <div class="icons">
         <div class="activeOrder"
         @click="$store.commit('changeModal', { name : 'orderCheckout', allowOutsideClick : true, active: true })"
-        >{{orderAmount}}</div>
-        <div class="waitingOrders"></div>
+        >
+            <div class="cartAmount" :style="orderAmount > 9 ? 'padding: 0.4rem 0.4rem;' : 'padding: 0.4rem 0.6rem;'">
+                {{orderAmount}}
+            </div>    
+        </div>
+        <div class="help"></div>
     </div>
 
 </nav>
@@ -88,9 +92,9 @@ nav {
     /* Icons */
     .icons {
         display: flex;
-        gap: .5rem;
+        gap: 1.5rem;
 
-        .activeOrder, .waitingOrders {
+        .activeOrder, .help {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -101,11 +105,27 @@ nav {
         }
 
         .activeOrder {
-            background-color: var(--MouldGreen);
+            background-image: url('~@/assets/shopping-cart-solid.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: .6;
+
+
+            .cartAmount {
+                background: var(--MediumBlue);
+                border-radius: 100%;
+
+                margin-top: -2rem;
+                margin-right: -2rem;
+            }
+
         }
 
-        .waitingOrders {
-            background-color: var(--Brown);
+        .help {
+            background-image: url('~@/assets/question-circle-regular.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: .6;
         }
     }
 }

@@ -32,6 +32,12 @@
       <OrderCheckout
       v-if="activeModal.name == 'orderCheckout'" />
 
+      <Help
+      v-if="activeModal.name == 'help'" />
+
+      <NavScreen
+      v-if="activeModal.name == 'navScreen'" />
+
       </div>
     </div>
 
@@ -43,15 +49,17 @@
 //#region Component imports
 
 import Nav from '@/components/NavBar'
+import NavScreen from '@/components/NavScreen'
 import CreateCashierItem from '@/components/CreateCashierItem'
 import ConfirmDeleteCashierItem from '@/components/ConfirmDeleteCashierItem'
 import EditCashierItem from '@/components/EditCashierItem'
 import OrderCheckout from '@/components/OrderCheckout'
+import Help from '@/components/Help'
 
 //#endregion
 
 export default {
-  components : { Nav, CreateCashierItem, ConfirmDeleteCashierItem, EditCashierItem, OrderCheckout },
+  components : { Nav, NavScreen, CreateCashierItem, ConfirmDeleteCashierItem, EditCashierItem, OrderCheckout, Help },
 
   computed: {
 

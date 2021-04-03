@@ -25,7 +25,7 @@
       </div>
   </div>
 
-  <OrderPayment v-else @goBack="showPaymentDetails = false" />
+  <OrderPayment v-else @goBack="showPaymentDetails = false;" />
 
 </template>
 
@@ -57,7 +57,7 @@ export default {
     async loadPaymentDetails(){
       await this.$store.dispatch('generateSwishPayment', null)
       this.showPaymentDetails = true
-      console.log(this.qrCode)
+      console.log(this.$store.state.modal)
     }
   },
 

@@ -57,9 +57,7 @@ export default {
   p {
     text-align: center;
   }
-
 }
-
 
 .overlayContainer {
   max-height: 50rem;

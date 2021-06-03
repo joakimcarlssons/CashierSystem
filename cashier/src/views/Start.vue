@@ -14,7 +14,7 @@
       </button>
     </div>
 
-    <h4>Läs mer | Hitta kassa</h4>
+    <!--<h4>Läs mer | Hitta kassa</h4>-->
 
   </div>
 </template>

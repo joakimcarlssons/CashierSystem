@@ -31,7 +31,7 @@ export default {
 .container {
   justify-content: space-around;
   min-width: 20rem;
-  padding: 1rem;
+  padding: 6rem 2rem;
 
     .overlayContainer {
     min-height: 50rem;

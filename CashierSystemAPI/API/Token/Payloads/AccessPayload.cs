@@ -16,6 +16,12 @@ namespace CashierSystemAPI
         /// Gets or sets the user identifier.
         /// </summary>
         public int UserID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the phone number for this user.
+        /// </summary>
+        public string PhoneNumber { get; set; }
+
         /// <summary>
         /// Gets the expiration date of the token.
         /// </summary>

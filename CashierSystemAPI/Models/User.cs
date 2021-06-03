@@ -19,7 +19,7 @@ namespace CashierSystemAPI
         /// <summary>
         /// Gets or sets the phone number.
         /// </summary>
-        [MinLength(10)] [MaxLength(10)]
+        [MinLength(10)]
         public string PhoneNumber { get; set; }
     }
 }

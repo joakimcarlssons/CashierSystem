@@ -155,7 +155,7 @@ namespace CashierSystemAPI
                 }
             }
             // Return response that tells there was a server error
-            catch { return StatusCode(500, new ErrorResponse(500, "Error")); }
+            catch { return StatusCode(500, new ErrorResponse(500, "Internal server error")); }
         }
     }
 }

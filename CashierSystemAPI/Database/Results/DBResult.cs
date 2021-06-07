@@ -15,5 +15,13 @@ namespace CashierSystemAPI
         /// The result.
         /// </value>
         public QueryResults Result { get; set; }
+
+        /// <summary>
+        /// Gets or sets the returned value.
+        /// </summary>
+        /// <value>
+        /// The returned value.
+        /// </value>
+        public dynamic ReturnedVal { get; set; }
     }
 }

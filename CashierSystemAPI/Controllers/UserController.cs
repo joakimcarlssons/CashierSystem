@@ -50,7 +50,7 @@ namespace CashierSystemAPI
                 if (Math.Floor(Math.Log10(login.PIN)) + 1 != 4)
                     // Add error message
                     errors = true;
-                if (!await Validate.PhoneNumber(login.PhoneNumber))
+                if (!Validate.PhoneNumber(login.PhoneNumber))
                     // Add error message
                     errors = true;
 
@@ -75,7 +75,7 @@ namespace CashierSystemAPI
                     }
                     else
                         // Return the JWT token to the client
-                        return BadRequest(new ErrorResponse(500, "User could not be created"));
+                        return BadRequest(new ErrorResponse(400, "Phonenumber already registered"));
 
                 }
                 // If errors exist...

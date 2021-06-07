@@ -21,7 +21,7 @@ namespace CashierSystemAPI
         /// <summary>
         /// <see cref="IRepository.Connect"/>
         /// </summary>
-        public IDbConnection Connect()
+        public SqlConnection Connect()
         {
             // Create the connection
             var Connection = 
@@ -150,8 +150,11 @@ namespace CashierSystemAPI
                 // Open a new connection to the database
                 using (var connection = Connect())
                 {
+                    // Open connection
+                    await connection.OpenAsync();
+
                     // Get the result from the database
-                    var res = (await connection.QueryAsync<DBResult>(
+                    var res = (await connection.QueryMultipleAsync(
                         "AddItem",
                         // Create parameters
                         new
@@ -163,11 +166,22 @@ namespace CashierSystemAPI
                             Image = item.Image,
                             Description = item.Description
                         }
-                        ,
-                        commandType: CommandType.StoredProcedure)).First();
+                        , null, null,
+                        commandType: CommandType.StoredProcedure));
+
+                    // Create the return result object
+                    var ret = new DBResult();
+                    // Set the call status
+                    ret.Result = (await res.ReadAsync<QueryResults>()).First();
+                    // If item was added
+                    if (ret.Result == QueryResults.Successful)
+                    {
+                        // Set the returned value
+                        ret.ReturnedVal = (await res.ReadAsync<int>()).First();
+                    }
 
                     // Return the result
-                    return res;
+                    return ret;
                 }
             }
             // If query failed on the API level

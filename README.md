@@ -12,5 +12,5 @@
 3. Setup the web page (NodeJS and NPM needs to be installed)
 	* 3a. Open up a CMD and navigate into the folder 'Cashier'.
 	* 3b. Run the command npm install to install requried dependencies.
-	* 3c. Run the command npm run serve to compile the solution and start the local server.
+	* 3c. Run the command npm run serve to compile the solution and start the local server. (Run the server on port 8080 to avoid CORS errors)
 	* 3d. Navigate to the local link in your browser.

@@ -38,7 +38,11 @@ namespace CashierSystemAPI
         {
             // Create the JWT token
             var token =
-                JWSTokenBuilder.BuildToken<JWSToken<JWSHeader, AccessPayload>>(JWSAlgorithms.HS256, new AccessPayload() { UserID = user.UserID }, "secret");
+                JWSTokenBuilder.BuildToken<JWSToken<JWSHeader, AccessPayload>>(JWSAlgorithms.HS256, new AccessPayload() 
+                { 
+                    UserID = user.UserID, 
+                    PhoneNumber = user.PhoneNumber 
+                }, "secret");
 
             // Return the token
             return token;

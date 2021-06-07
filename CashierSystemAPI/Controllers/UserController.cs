@@ -4,11 +4,10 @@
 namespace CashierSystemAPI
 {
     // Required namespaces
+    using System;
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// Controller for all user requests
@@ -51,7 +50,7 @@ namespace CashierSystemAPI
                 if (Math.Floor(Math.Log10(login.PIN)) + 1 != 4)
                     // Add error message
                     errors = true;
-                if (login.PhoneNumber.Length != 10 || !ulong.TryParse(login.PhoneNumber, out _))
+                if (!Validate.PhoneNumber(login.PhoneNumber))
                     // Add error message
                     errors = true;
 
@@ -76,11 +75,11 @@ namespace CashierSystemAPI
                     }
                     else
                         // Return the JWT token to the client
-                        return BadRequest(new ErrorResponse(400, "Could not crete user"));
+                        return BadRequest(new ErrorResponse(400, "Phonenumber already registered"));
 
                 }
                 // If errors exist...
-                return BadRequest(new ErrorResponse(400, "Could not crete user"));
+                return BadRequest(new ErrorResponse(400, "Could not create user, bad PIN or phonenumber"));
             }
             // Internal error
             catch { return StatusCode(500, new ErrorResponse(500, "Internal server error")); }

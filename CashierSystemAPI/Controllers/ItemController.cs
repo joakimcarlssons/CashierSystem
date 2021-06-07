@@ -52,17 +52,19 @@ namespace CashierSystemAPI
                 else
                 {
                     // If the JWT is valid...
-                    if (TokenHelpers.VerifyToken(token) == VerifyResults.Valid) 
+                    if (TokenHelpers.VerifyToken(token) == VerifyResults.Valid)
                     {
                         // Set the user id on the item
                         item.SellerID = token.Payload.UserID;
-                        
+
                         // Add the item and get the result
                         var res = await Container.Repository.AddItem(item);
 
                         // If the item was added successfuly
-                        if(res.Result == QueryResults.Successful)
+                        if (res.Result == QueryResults.Successful)
                         {
+                            // Grab and set the item id
+                            item.ItemID = res.ReturnedVal;
                             // The item was added so return OK response
                             return Ok(new ItemResponse("Item(s) added", item));
                         }

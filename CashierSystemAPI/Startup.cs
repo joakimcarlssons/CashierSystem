@@ -22,6 +22,17 @@ namespace CashierSystemAPI
             // Setup the IoC container
             Container.SetupIoC();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("All", builder =>
+                {
+                    builder.WithOrigins("http://localhost:8080", "http://192.168.1.246:8080")
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+                });
+            });
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -38,6 +49,8 @@ namespace CashierSystemAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CashierSystemAPI v1"));
             }
+
+            app.UseCors("All");
 
             app.UseHttpsRedirection();
 

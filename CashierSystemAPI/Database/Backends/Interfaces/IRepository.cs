@@ -7,6 +7,7 @@ namespace CashierSystemAPI
     using System.Data;
     using System.Collections;
     using System.Threading.Tasks;
+    using System.Data.SqlClient;
 
     /// <summary>
     /// Repository interface
@@ -16,7 +17,7 @@ namespace CashierSystemAPI
         /// <summary>
         /// Connect to the database
         /// </summary>
-        public abstract IDbConnection Connect();
+        public abstract SqlConnection Connect();
 
         // Functions for the menu controller
         #region User controller

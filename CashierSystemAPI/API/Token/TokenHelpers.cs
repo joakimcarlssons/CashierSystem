@@ -21,7 +21,10 @@ namespace CashierSystemAPI
             // If the token is missing
             if (authorization == null) return null;
             // Try to format the token
-            try { authorization = authorization.Substring(7); }
+            try
+            {
+                authorization = authorization.Substring(1, authorization.Length - 2);
+            }
             // If formating failed... return null response
             catch { return null; }
 

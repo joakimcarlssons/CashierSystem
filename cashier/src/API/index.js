@@ -2,17 +2,19 @@
 import axios from 'axios'
 
 // Define variables
-baseURL = "https://localhost:5001/"
+let baseURL = "https://localhost:44316/"
 
 //#region User functions
 
 // Creates a new user
 export async function CreateUser(phoneNumber, PIN) {
 
-    return await axios.post(baseURL + "User/Create", {
+    return await axios.post(baseURL + "user/create", {
         phoneNumber: phoneNumber,
         PIN: PIN
-    });
+    })
+    .then  (res => { return res})
+    .catch (err => { return err.response });
 }
 // Logins the user
 export async function LoginUser(phoneNumber, PIN) {
@@ -42,7 +44,9 @@ export async function DeleteItem(id, token) {
         headers: {
             Authorization: token
         }
-    });
+    })
+    .then  (res => { return res})
+    .catch (err => { return err.response });
 }
 
 // Creates a new item
@@ -58,13 +62,15 @@ export async function CreateItem(item, token) {
             name: item.name,
             stock: item.stock,
             price: item.price,
-            image: item.image,
-            description: item.description
+            image: item.img,
+            description: item.desc
         }
-    });
+    })
+    .then  (res => { return res})
+    .catch (err => { return err.response });
 }
 
-// Updates an item
+// Update an item
 export async function UpdateItem(id, item, token) {
 
     return await axios({
@@ -78,10 +84,12 @@ export async function UpdateItem(id, item, token) {
             stock: item.stock,
             price: item.price,
             sellerID: item.sellerID,
-            image: item.image,
-            description: item.description
+            image: item.img,
+            description: item.desc
         }
-    });
+    })
+    .then  (res => { return res})
+    .catch (err => { return err.response });
 }
 
 //#endregion
@@ -93,7 +101,13 @@ export async function UpdateItem(id, item, token) {
 // A token can be provided to retrieve the logged in sellers items
 export async function GetMenu(id = null, token = null) {
 
-    return await axios.get(baseURL + "menu/" + id);
+    return await axios({
+        method: 'get',
+        url: baseURL + "menu/" + id,
+        headers: {
+            Authorization: token
+        }
+    });
 }
 
 //#endregion
@@ -114,7 +128,7 @@ export async function CreateOrder(sellerID, itemIDs) {
 }
 
 // Delete an order
-export async function DeleteItem(id, token) {
+export async function DeleteOrder(id, token) {
 
     return await axios({
         method: 'delete',
@@ -123,6 +137,27 @@ export async function DeleteItem(id, token) {
             Authorization: token
         }
     });
+}
+
+//#endregion
+
+//#region Swish functions
+
+// Get swish QR code
+export async function GetSwishQR(sum, token) {
+
+    return await axios({
+        method: 'post',
+        url: baseURL + "Swish/QR",
+        headers: {
+            Authorization: token
+        },
+        data: {
+            price: sum
+        }
+    })
+    .then  (res => { return res})
+    .catch (err => { return err.response });
 }
 
 //#endregion

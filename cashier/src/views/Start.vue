@@ -27,6 +27,8 @@ export default {
         // The user of the application
         user : {
             phoneNumber : null,
+            // Temporary default
+            pin : 1234
         }
 
     }},
@@ -34,7 +36,7 @@ export default {
     methods: {
 
         // Register a user
-        async registerUser() {
+        async registerUser() {       
             await this.$store.dispatch('registerUser', this.user)
 
             this.$router.push('/cashier')

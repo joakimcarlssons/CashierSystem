@@ -55,7 +55,7 @@ export default {
     },
 
     async loadPaymentDetails(){
-      await this.$store.dispatch('generateSwishPayment', null)
+      await this.$store.dispatch('generateSwishPayment', this.totalPrice)
       this.showPaymentDetails = true
       console.log(this.$store.state.modal)
     }

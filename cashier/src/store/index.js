@@ -4,13 +4,13 @@ import Vuex from 'vuex'
 // Import mutation names
 import * as m from './mutations'
 
+// Import API functions
+import * as API from '../API/index'
+
 // Import modules
 import {Cashier} from './modules/cashier'
 import {Order} from './modules/order'
 import {User} from './modules/user'
-
-/* API imports */
-import {GenerateMockQRCode} from '@/API/swish.js' 
 
 Vue.use(Vuex)
 
@@ -31,14 +31,27 @@ export default new Vuex.Store({
     [m.RESET_MODAL]: (state) => state.modal = { name : "", allowOutsideClick : true, active : false },
 
     // Update the QR Code
-    generateSwishPayment: (state, code) => state.qrCode = code
+    generateSwishPayment: (state, code) => {
+      console.log(code);
+      
+      state.qrCode = code
+    }
 
   },
   actions: {
 
-    async generateSwishPayment(context) {
-      let res = GenerateMockQRCode()
-      context.commit('generateSwishPayment', res.data)
+    async generateSwishPayment(context, sum) {
+
+      // Get the JWT token
+      let token = localStorage.getItem('JWT');
+
+      // If a token is saved in storage (User is logged on)
+      if(token != null){
+        // Make API call
+        var res = await API.GetSwishQR(sum, token);
+        // Commit changes
+        context.commit('generateSwishPayment', res.data.response.qr);
+      }
     }
 
   },

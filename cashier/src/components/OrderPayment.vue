@@ -12,8 +12,11 @@
       <!-- Info -->
       <p>Be kunden att scanna följande QR kod för att slutföra betalningen.</p>
 
-      <!-- MOCK QR CODE -->
+      <!-- MOCK QR CODE
       <img :src="require('../assets/response.svg')" alt="qr" />
+      -->
+      
+      <div v-html="this.$store.state.qrCode" class="qrContainer"/>
 
       <!-- Approve payment -->
       <button
@@ -44,6 +47,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.qrContainer {
+  height: 20rem;
+  width: 20rem;
+}
 
 .container {
   justify-content: space-around;

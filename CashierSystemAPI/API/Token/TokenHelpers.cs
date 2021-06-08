@@ -20,13 +20,23 @@ namespace CashierSystemAPI
         {
             // If the token is missing
             if (authorization == null) return null;
-            // Try to format the token
-            try
+
+            // Check how this token starts...
+
+            // If it starts with 'bearer'...
+            if (authorization.StartsWith("Bearer "))
+                authorization = authorization.Substring(7);
+            // Else format normally...
+            else
             {
-                authorization = authorization.Substring(1, authorization.Length - 2);
+                // Try to format the token
+                try
+                {
+                    authorization = authorization.Substring(1, authorization.Length - 2);
+                }
+                // If formating failed... return null response
+                catch { return null; }
             }
-            // If formating failed... return null response
-            catch { return null; }
 
             // Convert jwt into a token object
             return JWSTokenHandler.ToToken<JWSToken<JWSHeader, AccessPayload>>(authorization);

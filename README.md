@@ -1,5 +1,8 @@
 # CashierSystem
 
+A temporary cashier system using Swish as its payment method.
+
+
 # Setup steps:
 
 1. Pull down the content from the branch main.
